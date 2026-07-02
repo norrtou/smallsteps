@@ -398,6 +398,14 @@ h1 {
   font-size: 0.95rem;
 }
 
+/* ---- flow hint ---- */
+
+.hint {
+  margin: -10px 6px 16px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
 /* ---- empty state ---- */
 
 .empty-state {
@@ -421,6 +429,42 @@ h1 {
   font-size: 0.92rem;
 }
 
+.guide {
+  margin: 24px auto 0;
+  padding: 0;
+  max-width: 42ch;
+  text-align: left;
+  list-style: none;
+  counter-reset: guide;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.guide li {
+  counter-increment: guide;
+  position: relative;
+  padding-left: 38px;
+  font-size: 0.88rem;
+}
+
+.guide li::before {
+  content: counter(guide);
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--green-soft);
+  color: var(--green-deep);
+  font-weight: 700;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* ---- footer ---- */
 
 .app-footer {
@@ -430,7 +474,21 @@ h1 {
   color: var(--faint);
 }
 
-.app-footer p { margin: 0; }
+.app-footer p { margin: 0 0 6px; }
+
+.link-btn {
+  font: inherit;
+  background: none;
+  border: none;
+  color: var(--muted);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.link-btn:hover { color: var(--danger); }
+
+.version { color: #c3d2c6; font-size: 0.7rem; }
 
 /* ---- desktop ---- */
 

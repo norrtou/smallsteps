@@ -28,6 +28,12 @@
       progress: function (d, t) { return d + '/' + t + ' steg klara'; },
       next: 'nästa',
       goalDone: 'Du nådde ditt mål 🌿',
+      flowHint: 'Tryck på ett steg för att bocka av det, dela upp det eller ta bort det.',
+      guide1: 'Skriv in något du vill uppnå.',
+      guide2: 'Känns det för stort? Tryck på steget och välj ”För stort” för att dela upp det i mindre steg.',
+      guide3: 'Bocka av de små stegen i din takt – när alla är klara är målet nått.',
+      resetAll: 'Rensa allt och börja om',
+      confirmReset: 'Ta bort alla mål och börja om från början?',
       confirmRemove: 'Ta bort det här steget och alla dess understeg?',
       expand: 'Visa understeg',
       collapse: 'Dölj understeg',
@@ -53,6 +59,12 @@
       progress: function (d, t) { return d + '/' + t + ' steps done'; },
       next: 'next',
       goalDone: 'You reached your goal 🌿',
+      flowHint: 'Tap a step to check it off, split it up, or remove it.',
+      guide1: 'Write down something you want to achieve.',
+      guide2: 'Feels too big? Tap the step and choose “Too big” to split it into smaller steps.',
+      guide3: 'Check off the small steps at your own pace – when they are all done, the goal is reached.',
+      resetAll: 'Clear everything and start over',
+      confirmReset: 'Remove all goals and start from scratch?',
       confirmRemove: 'Remove this step and all of its sub-steps?',
       expand: 'Show sub-steps',
       collapse: 'Hide sub-steps',
@@ -170,6 +182,9 @@
   var formEl = document.getElementById('goal-form');
   var inputEl = document.getElementById('goal-input');
   var langBtn = document.getElementById('lang-toggle');
+  var flowHintEl = document.getElementById('flow-hint');
+  var resetRowEl = document.getElementById('reset-row');
+  var resetBtn = document.getElementById('reset-all');
 
   function esc(s) {
     return s.replace(/[&<>"']/g, function (c) {
@@ -272,6 +287,8 @@
     }
     goalsEl.innerHTML = html;
     emptyEl.hidden = state.goals.length > 0;
+    flowHintEl.hidden = state.goals.length === 0;
+    resetRowEl.hidden = state.goals.length === 0;
 
     applyStaticStrings();
 
@@ -475,6 +492,16 @@
 
   langBtn.addEventListener('click', function () {
     state.lang = state.lang === 'sv' ? 'en' : 'sv';
+    save();
+    render();
+  });
+
+  resetBtn.addEventListener('click', function () {
+    if (!window.confirm(t('confirmReset'))) return;
+    var lang = state.lang;
+    state = defaultState();
+    state.lang = lang;
+    selectedId = renamingId = hintId = null;
     save();
     render();
   });

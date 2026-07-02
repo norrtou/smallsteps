@@ -50,6 +50,8 @@
         </form>
       </section>
 
+      <p id="flow-hint" class="hint" data-i18n="flowHint" hidden>Tryck på ett steg för att bocka av det, dela upp det eller ta bort det.</p>
+
       <section id="goals" class="goals" aria-live="polite"></section>
 
       <section id="empty-state" class="empty-state" hidden>
@@ -65,11 +67,18 @@
         </svg>
         <h2 data-i18n="emptyTitle">Börja med ett mål</h2>
         <p data-i18n="emptyText">Skriv något du vill uppnå. Sedan bryter du ner det i små steg – ett i taget, i din egen takt.</p>
+        <ol class="guide">
+          <li data-i18n="guide1">Skriv in något du vill uppnå.</li>
+          <li data-i18n="guide2">Känns det för stort? Tryck på steget och välj ”För stort” för att dela upp det i mindre steg.</li>
+          <li data-i18n="guide3">Bocka av de små stegen i din takt – när alla är klara är målet nått.</li>
+        </ol>
       </section>
     </main>
 
     <footer class="app-footer">
+      <p id="reset-row" hidden><button id="reset-all" class="link-btn" type="button" data-i18n="resetAll">Rensa allt och börja om</button></p>
       <p data-i18n="footer">All data sparas bara på din enhet. Fungerar offline.</p>
+      <p class="version">v3</p>
     </footer>
   </div>
 
