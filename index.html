@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Small Steps – gör stora mål till små steg</title>
+  <meta name="description" content="Small Steps hjälper dig bryta ner stora mål i små, genomförbara steg. Enkel målhantering och vardagsstruktur – gratis, offline, utan konto. All data stannar på din enhet.">
+  <meta name="theme-color" content="#f3f7f1">
+  <meta property="og:title" content="Small Steps – gör stora mål till små steg">
+  <meta property="og:description" content="Bryt ner stora mål i små, genomförbara steg. Gratis, offline, ingen inloggning.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="leaves" aria-hidden="true">
+    <svg class="leaf leaf-1" viewBox="0 0 64 64"><path d="M52 8C30 10 12 26 10 52c26-2 42-20 42-44z" fill="currentColor"/><path d="M14 48C24 34 38 22 48 14" stroke="#fff" stroke-width="2.5" stroke-linecap="round" fill="none" opacity=".55"/></svg>
+    <svg class="leaf leaf-2" viewBox="0 0 64 64"><path d="M52 8C30 10 12 26 10 52c26-2 42-20 42-44z" fill="currentColor"/><path d="M14 48C24 34 38 22 48 14" stroke="#fff" stroke-width="2.5" stroke-linecap="round" fill="none" opacity=".55"/></svg>
+    <svg class="leaf leaf-3" viewBox="0 0 64 64"><path d="M52 8C30 10 12 26 10 52c26-2 42-20 42-44z" fill="currentColor"/><path d="M14 48C24 34 38 22 48 14" stroke="#fff" stroke-width="2.5" stroke-linecap="round" fill="none" opacity=".55"/></svg>
+  </div>
+
+  <div class="wrap">
+    <header class="app-header">
+      <div class="brand">
+        <svg class="logo" viewBox="0 0 64 64" aria-hidden="true">
+          <circle cx="32" cy="32" r="30" fill="#e4efe6"/>
+          <path d="M32 50V30" stroke="#34734f" stroke-width="4" stroke-linecap="round"/>
+          <path d="M32 38c-8 0-13-5-14-13 8 0 13 5 14 13z" fill="#57946f"/>
+          <path d="M32 32c8 0 13-5 14-13-8 0-13 5-14 13z" fill="#34734f"/>
+          <path d="M32 24c-5 0-8-3-9-9 5 0 8 3 9 9z" fill="#7fb694"/>
+        </svg>
+        <div>
+          <h1>Small Steps</h1>
+          <p class="tagline" data-i18n="tagline">Stora mål blir små steg.</p>
+        </div>
+      </div>
+      <button id="lang-toggle" class="lang-toggle" type="button" aria-label="Switch language">EN</button>
+    </header>
+
+    <main>
+      <section class="new-goal" aria-labelledby="new-goal-label">
+        <label id="new-goal-label" class="field-label" for="goal-input" data-i18n="askGoal">Vad vill du uppnå?</label>
+        <form id="goal-form" class="goal-form">
+          <input id="goal-input" type="text" autocomplete="off" maxlength="200"
+                 data-i18n-placeholder="goalPlaceholder" placeholder="Skriv ett mål …">
+          <button type="submit" class="btn btn-primary" data-i18n="addGoal">Lägg till mål</button>
+        </form>
+      </section>
+
+      <section id="goals" class="goals" aria-live="polite"></section>
+
+      <section id="empty-state" class="empty-state" hidden>
+        <svg class="empty-tree" viewBox="0 0 200 170" aria-hidden="true">
+          <path d="M100 160V78" stroke="#b9cfbc" stroke-width="6" stroke-linecap="round"/>
+          <path d="M100 118c-16-4-26-14-30-30 16 4 26 14 30 30z" fill="#cfe3d2"/>
+          <path d="M100 98c16-4 26-14 30-30-16 4-26 14-30 30z" fill="#a8cbb2"/>
+          <circle cx="100" cy="56" r="30" fill="#e4efe6"/>
+          <circle cx="72" cy="72" r="18" fill="#d7e8da"/>
+          <circle cx="128" cy="72" r="18" fill="#d7e8da"/>
+          <circle cx="100" cy="56" r="9" fill="#57946f"/>
+          <path d="M40 160h120" stroke="#dbe8dc" stroke-width="6" stroke-linecap="round"/>
+        </svg>
+        <h2 data-i18n="emptyTitle">Börja med ett mål</h2>
+        <p data-i18n="emptyText">Skriv något du vill uppnå. Sedan bryter du ner det i små steg – ett i taget, i din egen takt.</p>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <p data-i18n="footer">All data sparas bara på din enhet. Fungerar offline.</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
