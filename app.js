@@ -26,6 +26,8 @@
       stepPlaceholder: 'Ett litet steg …',
       splitHint: 'Fyll i några mindre steg. Lämna tomt det du inte behöver.',
       progress: function (d, t) { return d + '/' + t + ' steg klara'; },
+      next: 'nästa',
+      goalDone: 'Du nådde ditt mål 🌿',
       confirmRemove: 'Ta bort det här steget och alla dess understeg?',
       expand: 'Visa understeg',
       collapse: 'Dölj understeg',
@@ -49,6 +51,8 @@
       stepPlaceholder: 'One small step …',
       splitHint: 'Fill in a few smaller steps. Leave blank what you don’t need.',
       progress: function (d, t) { return d + '/' + t + ' steps done'; },
+      next: 'next',
+      goalDone: 'You reached your goal 🌿',
       confirmRemove: 'Remove this step and all of its sub-steps?',
       expand: 'Show sub-steps',
       collapse: 'Hide sub-steps',
@@ -82,6 +86,7 @@
       if (!data || !Array.isArray(data.goals)) return defaultState();
       if (data.lang !== 'sv' && data.lang !== 'en') data.lang = defaultState().lang;
       pruneBlanks(data.goals);
+      for (var i = 0; i < data.goals.length; i++) recomputeDone(data.goals[i]);
       return data;
     } catch (e) {
       return defaultState();
@@ -89,9 +94,32 @@
   }
 
   function save() {
+    for (var i = 0; i < state.goals.length; i++) recomputeDone(state.goals[i]);
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     } catch (e) { /* storage full or blocked — app keeps working in memory */ }
+  }
+
+  /* A step with sub-steps is done exactly when all of them are. */
+  function recomputeDone(node) {
+    if (node.children.length === 0) return node.done;
+    var all = true;
+    for (var i = 0; i < node.children.length; i++) {
+      if (!recomputeDone(node.children[i])) all = false;
+    }
+    node.done = all;
+    return node.done;
+  }
+
+  /* First unfinished leaf step — the next small thing to do. */
+  function nextStepId(node) {
+    if (node.title === '') return null;
+    if (node.children.length === 0) return node.done ? null : node.id;
+    for (var i = 0; i < node.children.length; i++) {
+      var hit = nextStepId(node.children[i]);
+      if (hit) return hit;
+    }
+    return null;
   }
 
   /* Blank steps are drafts; drop any that were never filled in. */
@@ -186,6 +214,9 @@
         checkSvg() + '</button>';
       html += '<button class="node-title" data-action="select" data-id="' + node.id + '">' +
         esc(node.title) + '</button>';
+      if (currentNextId === node.id) {
+        html += '<span class="next-chip">' + esc(t('next')) + '</span>';
+      }
       if (hasKids) {
         var p = countSteps(node);
         html += '<span class="node-progress">' + esc(t('progress')(p.done, p.total)) + '</span>';
@@ -215,10 +246,29 @@
     return html;
   }
 
+  var currentNextId = null;
+
+  function renderGoalCard(goal) {
+    var p = countSteps(goal);
+    var pct = p.total > 0 ? Math.round((p.done / p.total) * 100) : (goal.done ? 100 : 0);
+    var complete = goal.done && goal.title !== '';
+    currentNextId = nextStepId(goal);
+
+    var html = '<article class="goal-card' + (complete ? ' is-complete' : '') + '">';
+    if (p.total > 0) {
+      html += '<div class="bar" aria-hidden="true"><div class="bar-fill" style="width:' + pct + '%"></div></div>';
+    }
+    if (complete) {
+      html += '<p class="complete-note">' + esc(t('goalDone')) + '</p>';
+    }
+    html += '<ul class="tree">' + renderNode(goal) + '</ul></article>';
+    return html;
+  }
+
   function render() {
     var html = '';
     for (var i = 0; i < state.goals.length; i++) {
-      html += '<article class="goal-card"><ul class="tree">' + renderNode(state.goals[i]) + '</ul></article>';
+      html += renderGoalCard(state.goals[i]);
     }
     goalsEl.innerHTML = html;
     emptyEl.hidden = state.goals.length > 0;
@@ -272,7 +322,11 @@
   function toggleDone(id) {
     var hit = findNode(id);
     if (!hit) return;
-    hit.node.done = !hit.node.done;
+    var value = !hit.node.done;
+    (function setAll(node) {
+      node.done = value;
+      for (var i = 0; i < node.children.length; i++) setAll(node.children[i]);
+    })(hit.node);
     if (selectedId === id) selectedId = null;
     save();
     render();

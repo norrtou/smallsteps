@@ -1,6 +1,6 @@
 /* Small Steps service worker — cache-first so the app works fully offline. */
 
-var CACHE = 'small-steps-v1';
+var CACHE = 'small-steps-v2';
 var ASSETS = [
   './',
   './index.html',

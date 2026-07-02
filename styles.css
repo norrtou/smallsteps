@@ -236,15 +236,55 @@ h1 {
   white-space: nowrap;
 }
 
+.next-chip {
+  flex: none;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--green);
+  background: var(--green-soft);
+  border-radius: 999px;
+  padding: 2px 9px;
+}
+
+/* ---- goal progress & completion ---- */
+
+.bar {
+  height: 5px;
+  border-radius: 999px;
+  background: var(--green-mist);
+  margin: 8px 6px 4px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--green);
+  transition: width 0.3s ease;
+}
+
+.goal-card.is-complete {
+  background: #f5faf5;
+  border: 1px solid #cfe3d2;
+}
+
+.complete-note {
+  margin: 10px 6px 2px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--green-deep);
+  animation: fadeIn 0.3s ease;
+}
+
 /* check circle */
 
 .check {
   flex: none;
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  border: 1.5px solid var(--faint);
-  background: transparent;
+  border: 1.5px solid #b3c6b8;
+  background: var(--green-mist);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -253,7 +293,9 @@ h1 {
   transition: background 0.15s ease, border-color 0.15s ease;
 }
 
-.check svg { width: 13px; height: 13px; stroke: #fff; opacity: 0; transition: opacity 0.15s ease; }
+.check:hover { border-color: var(--green); }
+
+.check svg { width: 14px; height: 14px; stroke: #fff; opacity: 0; transition: opacity 0.15s ease; }
 
 .node.is-done > .node-row .check {
   background: var(--green);
